@@ -6,6 +6,11 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+@theme {
+  --color-app-base: #9876ff;
+  --color-app-base-hover: #8a6ce0;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
