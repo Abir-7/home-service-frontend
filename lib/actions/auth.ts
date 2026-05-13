@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { UserRole } from "@/lib/redux/features/auth/authSlice";
 
 export async function demoLogin() {
   const cookieStore = await cookies();
@@ -15,8 +16,8 @@ export async function demoLogin() {
     maxAge: 60 * 60 * 24 * 7, // 1 week
   });
 
-  // Set the user role to 'customer'
-  cookieStore.set("user_role", "customer", {
+  // Set the user role to 'customer' using enum
+  cookieStore.set("user_role", UserRole.CUSTOMER, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",

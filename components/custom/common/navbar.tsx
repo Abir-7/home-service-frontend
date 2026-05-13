@@ -39,13 +39,6 @@ const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
           <li>
             <Link href="/contact">Contact</Link>
           </li>
-          {isLoggedIn && (
-            <li>
-              <Link href="/dashboard" className="text-blue-600 font-bold">
-                Dashboard
-              </Link>
-            </li>
-          )}
         </ul>
 
         {/* Right Side */}

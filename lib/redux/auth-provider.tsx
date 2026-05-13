@@ -2,7 +2,7 @@
 
 import { useEffect, ReactNode } from 'react';
 import { useDispatch } from 'react-redux';
-import { login, setLoading } from './features/auth/authSlice';
+import { login, setLoading, UserRole } from './features/auth/authSlice';
 import { useGetMeQuery } from './api/apiSlice';
 
 interface AuthProviderProps {
@@ -14,9 +14,7 @@ export function AuthProvider({ children, token }: AuthProviderProps) {
   const dispatch = useDispatch();
   
   // Use RTK Query to fetch user data if a token exists
-  // The token is passed to headers automatically via apiSlice's prepareHeaders
-  // because we will also manually set the token in Redux state below
-  const { data: userData, isLoading, isError, isSuccess } = useGetMeQuery(undefined, {
+  const { data: userData, isError, isSuccess } = useGetMeQuery(undefined, {
     skip: !token, // Skip the query if no token is provided
   });
 
@@ -24,14 +22,12 @@ export function AuthProvider({ children, token }: AuthProviderProps) {
     if (token) {
       dispatch(setLoading(true));
       
-      // If we have a token, we at least set the token in state immediately
-      // This allows prepareHeaders in apiSlice to use it for the getMe call
+      // If we have a token, set it immediately so RTK Query can use it in headers
       if (!userData) {
-          // Temporarily set token so subsequent API calls (like getMe) can use it
-          dispatch(login({ user: { user_id: '', user_role: '' }, token }));
+          dispatch(login({ user: { user_id: '', user_role: UserRole.CUSTOMER }, token }));
       }
     }
-  }, [token, dispatch]);
+  }, [token, dispatch, userData]);
 
   useEffect(() => {
     if (isSuccess && userData && token) {
