@@ -5,7 +5,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Auth_header from "@/component/custom/common/auth_header";
+import Auth_header from "@/components/custom/common/auth_header";
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState("");
@@ -42,7 +42,11 @@ export default function ResetPasswordPage() {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 text-muted-foreground hover:text-foreground"
             >
-              {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              {showPassword ? (
+                <EyeOff className="w-4 h-4" />
+              ) : (
+                <Eye className="w-4 h-4" />
+              )}
             </Button>
           </div>
         </div>

@@ -7,7 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import Auth_header from "@/component/custom/common/auth_header";
+
+import { demoLogin } from "@/lib/actions/auth";
+import Auth_header from "@/components/custom/common/auth_header";
+
 export default function SignInPage() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -89,12 +92,35 @@ export default function SignInPage() {
           </Link>
         </div>
 
-        <Button
-          onClick={handleSubmit}
-          className="w-full h-11 bg-violet-600 hover:bg-violet-700 text-white font-semibold shadow-lg shadow-violet-200/50 transition-all active:scale-[0.98]"
-        >
-          Sign In
-        </Button>
+        <div className="space-y-3">
+          <Button
+            onClick={handleSubmit}
+            className="w-full h-11 bg-violet-600 hover:bg-violet-700 text-white font-semibold shadow-lg shadow-violet-200/50 transition-all active:scale-[0.98]"
+          >
+            Sign In
+          </Button>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-muted-foreground/20" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">
+                Or try out
+              </span>
+            </div>
+          </div>
+
+          <form action={demoLogin}>
+            <Button
+              type="submit"
+              variant="outline"
+              className="w-full h-11 border-violet-200 text-violet-600 hover:bg-violet-50 font-semibold transition-all active:scale-[0.98]"
+            >
+              Demo Login (Customer)
+            </Button>
+          </form>
+        </div>
 
         <p className="text-center text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}

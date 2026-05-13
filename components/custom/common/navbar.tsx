@@ -4,9 +4,10 @@
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, LogOut } from "lucide-react";
+import { logout } from "@/lib/actions/auth";
 
-const Navbar = () => {
+const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -38,6 +39,13 @@ const Navbar = () => {
           <li>
             <Link href="/contact">Contact</Link>
           </li>
+          {isLoggedIn && (
+            <li>
+              <Link href="/dashboard" className="text-blue-600 font-bold">
+                Dashboard
+              </Link>
+            </li>
+          )}
         </ul>
 
         {/* Right Side */}
@@ -57,10 +65,33 @@ const Navbar = () => {
             />
           </button>
 
-          {/* Login */}
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-            Login
-          </button>
+          {/* Login/Logout/Dashboard */}
+          {isLoggedIn ? (
+            <div className="flex items-center gap-3">
+              <Link
+                href="/dashboard"
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 hidden sm:block"
+              >
+                Go to Dashboard
+              </Link>
+              <form action={logout}>
+                <button
+                  type="submit"
+                  className="flex items-center gap-2 border border-red-200 text-red-600 px-4 py-2 rounded-lg hover:bg-red-50 transition"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Logout
+                </button>
+              </form>
+            </div>
+          ) : (
+            <Link
+              href="/signin"
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+            >
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </nav>

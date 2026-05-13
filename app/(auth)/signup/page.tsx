@@ -6,7 +6,7 @@ import { UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Auth_header from "@/component/custom/common/auth_header";
+import Auth_header from "@/components/custom/common/auth_header";
 
 export default function SignUpPage() {
   const [name, setName] = useState("");
