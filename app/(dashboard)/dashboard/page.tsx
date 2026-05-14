@@ -39,7 +39,9 @@ export default function DashboardPage() {
     <div className="p-8">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-2xl font-bold uppercase">{user?.user_role} Dashboard</h1>
+          <h1 className="text-2xl font-bold uppercase">
+            {user?.user_role === UserRole.CUSTOMER ? 'My Bookings' : `${user?.user_role} Dashboard`}
+          </h1>
           <p className="text-muted-foreground">Welcome back, {user?.full_name || 'User'}</p>
         </div>
         <form action={logout}>
