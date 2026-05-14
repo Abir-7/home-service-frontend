@@ -160,13 +160,6 @@ export default function CleanerMyBookingsPage() {
 
   return (
     <div className="max-w-7xl mx-auto p-4 md:p-8 space-y-8 min-h-screen">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">My Bookings</h1>
-        <p className="text-muted-foreground mt-1">
-          Manage and track your assigned cleaning jobs
-        </p>
-      </div>
-
       {/* ── Filter Tabs ── */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">

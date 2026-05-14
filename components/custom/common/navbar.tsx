@@ -28,7 +28,8 @@ const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   };
 
   const isDark = resolvedTheme === "dark";
-  const dashboardPath = user?.user_role === UserRole.CUSTOMER ? "/my-bookings" : "/dashboard";
+  const dashboardPath =
+    user?.user_role === UserRole.CUSTOMER ? "/my-bookings" : "/dashboard";
 
   return (
     <nav className="bg-white dark:bg-black shadow-md px-6 py-4 transition-colors duration-300">
@@ -74,7 +75,9 @@ const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
                 href={dashboardPath}
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 hidden sm:block"
               >
-                {user?.user_role === UserRole.CUSTOMER ? "My Bookings" : "Go to Dashboard"}
+                {user?.user_role === UserRole.CUSTOMER
+                  ? "My Bookings"
+                  : "Go to Dashboard"}
               </Link>
               <form action={logout}>
                 <button

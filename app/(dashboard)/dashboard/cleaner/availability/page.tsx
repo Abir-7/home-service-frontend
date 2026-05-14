@@ -265,26 +265,6 @@ export default function AvailabilityPage() {
 
   return (
     <div className="w-full mx-auto p-3 sm:p-4 md:p-8">
-      {/* ── Header ── */}
-      <div className="flex items-start sm:items-center justify-between gap-3 mb-4 sm:mb-6">
-        <div>
-          <h1 className="text-xl sm:text-3xl font-bold text-gray-900">
-            Your Schedule
-          </h1>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 sm:mt-1">
-            Manage your availability for upcoming bookings
-          </p>
-        </div>
-        <Button
-          className="bg-violet-500 hover:bg-violet-600 text-white rounded-xl h-9 sm:h-10 px-3 sm:px-5 text-xs sm:text-sm font-medium shrink-0"
-          onClick={() => setModalOpen(true)}
-        >
-          <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 sm:mr-1.5" />
-          <span className="hidden sm:inline">Add Availability</span>
-          <span className="sm:hidden ml-1">Add</span>
-        </Button>
-      </div>
-
       {/* ── Calendar Card ── */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-3 sm:p-6">
         {/* Month nav */}

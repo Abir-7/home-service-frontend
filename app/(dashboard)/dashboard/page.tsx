@@ -1,11 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 import { RootState } from "@/lib/redux/store";
 import { UserRole } from "@/lib/redux/features/auth/authSlice";
-import { logout } from "@/lib/actions/auth";
-import { Button } from "@/components/ui/button";
 
 import CleanerOverview from "./cleaner/overview";
 import ManagerOverview from "./manager/overview";
@@ -14,6 +13,13 @@ import AdminOverview from "./admin/overview";
 export default function DashboardPage() {
   const user = useSelector((state: RootState) => state.auth.user);
   const isLoading = useSelector((state: RootState) => state.auth.is_loading);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user?.user_role === UserRole.CUSTOMER) {
+      router.push("/my-bookings");
+    }
+  }, [user, router]);
 
   if (isLoading) {
     return <div className="p-8">Loading dashboard...</div>;
@@ -36,25 +42,5 @@ export default function DashboardPage() {
     }
   };
 
-  return (
-    <div className="p-8">
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h1 className="text-2xl font-bold uppercase">
-            {user?.user_role === UserRole.CUSTOMER
-              ? "My Bookings"
-              : `${user?.user_role} Dashboard`}
-          </h1>
-          <p className="text-muted-foreground">
-            Welcome back, {user?.full_name || "User"}
-          </p>
-        </div>
-        <form action={logout}>
-          <Button variant="destructive">Logout</Button>
-        </form>
-      </div>
-
-      {renderOverview()}
-    </div>
-  );
+  return <div className="p-8">{renderOverview()}</div>;
 }
