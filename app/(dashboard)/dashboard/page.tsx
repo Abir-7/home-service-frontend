@@ -1,16 +1,15 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/lib/redux/store';
-import { UserRole } from '@/lib/redux/features/auth/authSlice';
-import { logout } from '@/lib/actions/auth';
-import { Button } from '@/components/ui/button';
+import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/redux/store";
+import { UserRole } from "@/lib/redux/features/auth/authSlice";
+import { logout } from "@/lib/actions/auth";
+import { Button } from "@/components/ui/button";
 
-import CustomerOverview from './customer/overview';
-import CleanerOverview from './cleaner/overview';
-import ManagerOverview from './manager/overview';
-import AdminOverview from './admin/overview';
+import CleanerOverview from "./cleaner/overview";
+import ManagerOverview from "./manager/overview";
+import AdminOverview from "./admin/overview";
 
 export default function DashboardPage() {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -22,8 +21,6 @@ export default function DashboardPage() {
 
   const renderOverview = () => {
     switch (user?.user_role) {
-      case UserRole.CUSTOMER:
-        return <CustomerOverview />;
       case UserRole.CLEANER:
         return <CleanerOverview />;
       case UserRole.MANAGER:
@@ -31,7 +28,11 @@ export default function DashboardPage() {
       case UserRole.ADMIN:
         return <AdminOverview />;
       default:
-        return <div className="p-4 border border-yellow-200 bg-yellow-50 rounded-lg">User role not recognized. Please contact support.</div>;
+        return (
+          <div className="p-4 border border-yellow-200 bg-yellow-50 rounded-lg">
+            User role not recognized. Please contact support.
+          </div>
+        );
     }
   };
 
@@ -40,15 +41,19 @@ export default function DashboardPage() {
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold uppercase">
-            {user?.user_role === UserRole.CUSTOMER ? 'My Bookings' : `${user?.user_role} Dashboard`}
+            {user?.user_role === UserRole.CUSTOMER
+              ? "My Bookings"
+              : `${user?.user_role} Dashboard`}
           </h1>
-          <p className="text-muted-foreground">Welcome back, {user?.full_name || 'User'}</p>
+          <p className="text-muted-foreground">
+            Welcome back, {user?.full_name || "User"}
+          </p>
         </div>
         <form action={logout}>
           <Button variant="destructive">Logout</Button>
         </form>
       </div>
-      
+
       {renderOverview()}
     </div>
   );

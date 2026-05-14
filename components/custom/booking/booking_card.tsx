@@ -15,6 +15,8 @@ export type BookingStatus =
   | "completed"
   | "cancelled";
 
+export type Priority = "kitchen" | "bedroom";
+
 export interface Addon {
   label: string;
   icon: React.ReactNode;
@@ -23,6 +25,7 @@ export interface Addon {
 export interface Booking {
   id: string;
   status: BookingStatus;
+  priority: Priority[];
   serviceType: string;
   serviceLabel: string;
   bedrooms: number;
@@ -65,6 +68,17 @@ const statusConfig: Record<
   },
 };
 
+const priorityConfig: Record<Priority, { label: string; className: string }> = {
+  kitchen: {
+    label: "Kitchen",
+    className: "bg-orange-100 text-orange-700 border-orange-200",
+  },
+  bedroom: {
+    label: "Bedroom",
+    className: "bg-blue-100 text-blue-700 border-blue-200",
+  },
+};
+
 // ─── BookingCard ─────────────────────────────────────────────────────────────
 
 interface BookingCardProps {
@@ -81,7 +95,7 @@ export default function BookingCard({
   const { label, className } = statusConfig[booking.status];
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 flex flex-col gap-4 h-full min-h-[420px]">
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 flex flex-col gap-4 h-full min-h-[460px]">
       {/* ── Header ── */}
       <div className="flex items-start justify-between shrink-0">
         <div className="flex items-center gap-3">
@@ -111,31 +125,8 @@ export default function BookingCard({
 
       <Separator className="shrink-0" />
 
-      {/* ── Main Content (Scrollable if too long, but flex-grow pushes actions down) ── */}
+      {/* ── Main Content ── */}
       <div className="flex flex-col gap-4 flex-grow">
-        {/* ── Cleaner Details (assigned / completed) ── */}
-        {booking.assignedTo &&
-          (booking.status === "assigned" || booking.status === "completed") ? (
-            <>
-              <div className="shrink-0">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
-                  Cleaner Details
-                </p>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-400">Assigned to</span>
-                  <span className="font-medium text-gray-800">
-                    {booking.assignedTo}
-                  </span>
-                </div>
-              </div>
-              <Separator className="shrink-0" />
-            </>
-          ) : (
-            // Empty placeholder to maintain some vertical consistency if needed, 
-            // but flex-grow will handle the height alignment.
-            null
-          )}
-
         {/* ── Service Details ── */}
         <div className="shrink-0">
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
@@ -173,6 +164,27 @@ export default function BookingCard({
         </div>
 
         <div className="mt-auto">
+          <Separator className="shrink-0 mb-4" />
+
+          {/* ── Priority ── */}
+          <div className="flex items-center justify-between text-sm mb-4">
+            <span className="text-gray-400">Priority Scope</span>
+            <div className="flex gap-1">
+              {booking.priority.map((p) => (
+                <Badge
+                  key={p}
+                  variant="outline"
+                  className={cn(
+                    "capitalize font-medium",
+                    priorityConfig[p].className,
+                  )}
+                >
+                  {p}
+                </Badge>
+              ))}
+            </div>
+          </div>
+
           <Separator className="shrink-0 mb-4" />
 
           {/* ── Pricing ── */}
@@ -216,8 +228,6 @@ export default function BookingCard({
                 Review
               </Button>
             )}
-            
-            {/* If no button is shown, the min-h-11 div keeps the card height consistent */}
           </div>
         </div>
       </div>
