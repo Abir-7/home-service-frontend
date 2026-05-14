@@ -231,23 +231,13 @@ export default function CleanerBookingCard({
           {/* ── Actions ── */}
           <div className="min-h-11 flex items-end gap-2">
             {booking.status === "new" && (
-              <>
-                <Button
-                  className="flex-1 bg-violet-500 hover:bg-violet-600 text-white rounded-xl h-11 font-medium"
-                  onClick={() => onStart?.(booking.id)}
-                >
-                  <Play className="w-4 h-4 mr-1.5" />
-                  Start
-                </Button>
-                <Button
-                  variant="outline"
-                  className="flex-1 border-gray-200 text-gray-600 hover:bg-gray-50 rounded-xl h-11"
-                  onClick={() => onViewDetails?.(booking.id)}
-                >
-                  <Eye className="w-4 h-4 mr-1.5" />
-                  Details
-                </Button>
-              </>
+              <Button
+                className="w-full bg-violet-500 hover:bg-violet-600 text-white rounded-xl h-11 font-medium"
+                onClick={() => onStart?.(booking.id)}
+              >
+                <Play className="w-4 h-4 mr-1.5" />
+                Start Task
+              </Button>
             )}
 
             {booking.status === "in_progress" && (
@@ -261,14 +251,9 @@ export default function CleanerBookingCard({
             )}
 
             {booking.status === "completed" && (
-              <Button
-                variant="outline"
-                className="w-full border-gray-200 text-gray-500 rounded-xl h-11"
-                onClick={() => onViewDetails?.(booking.id)}
-              >
-                <Eye className="w-4 h-4 mr-2" />
-                View Details
-              </Button>
+              <div className="w-full text-center text-sm text-gray-400 py-2">
+                Task Completed
+              </div>
             )}
           </div>
         </div>

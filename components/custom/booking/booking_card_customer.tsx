@@ -85,12 +85,14 @@ interface BookingCardProps {
   booking: Booking;
   onCancel?: (id: string) => void;
   onReview?: (id: string) => void;
+  hideActions?: boolean;
 }
 
 export default function BookingCard({
   booking,
   onCancel,
   onReview,
+  hideActions = false,
 }: BookingCardProps) {
   const { label, className } = statusConfig[booking.status];
 
@@ -208,27 +210,29 @@ export default function BookingCard({
           </div>
 
           {/* ── Actions ── */}
-          <div className="min-h-11 flex items-end">
-            {booking.status === "pending" && (
-              <Button
-                variant="outline"
-                className="w-full border-red-300 text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl h-11"
-                onClick={() => onCancel?.(booking.id)}
-              >
-                Cancel Booking
-              </Button>
-            )}
+          {!hideActions && (
+            <div className="min-h-11 flex items-end">
+              {booking.status === "pending" && (
+                <Button
+                  variant="outline"
+                  className="w-full border-red-300 text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl h-11"
+                  onClick={() => onCancel?.(booking.id)}
+                >
+                  Cancel Booking
+                </Button>
+              )}
 
-            {booking.status === "completed" && (
-              <Button
-                className="w-full bg-violet-500 hover:bg-violet-600 text-white rounded-xl h-11 font-medium"
-                onClick={() => onReview?.(booking.id)}
-              >
-                <Star className="w-4 h-4 mr-2" />
-                Review
-              </Button>
-            )}
-          </div>
+              {booking.status === "completed" && (
+                <Button
+                  className="w-full bg-violet-500 hover:bg-violet-600 text-white rounded-xl h-11 font-medium"
+                  onClick={() => onReview?.(booking.id)}
+                >
+                  <Star className="w-4 h-4 mr-2" />
+                  Review
+                </Button>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
