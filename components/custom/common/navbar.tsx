@@ -2,14 +2,18 @@
 "use client";
 
 import Link from "next/link";
-import { useTheme } from "@teispace/next-themes";
+import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
 import { Moon, Sun, LogOut } from "lucide-react";
 import { logout } from "@/lib/actions/auth";
+import { UserRole } from "@/lib/redux/features/auth/authSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/redux/store";
 
 const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const user = useSelector((state: RootState) => state.auth.user);
 
   useEffect(() => {
     setMounted(true);
@@ -24,6 +28,7 @@ const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   };
 
   const isDark = resolvedTheme === "dark";
+  const dashboardPath = user?.user_role === UserRole.CUSTOMER ? "/my-bookings" : "/dashboard";
 
   return (
     <nav className="bg-white dark:bg-black shadow-md px-6 py-4 transition-colors duration-300">
@@ -45,13 +50,6 @@ const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
           <li>
             <Link href="/contact">Contact</Link>
           </li>
-          {isLoggedIn && (
-            <li>
-              <Link href="/dashboard" className="text-blue-600 font-bold">
-                Dashboard
-              </Link>
-            </li>
-          )}
         </ul>
 
         {/* Right Side */}
@@ -73,10 +71,10 @@ const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
           {isLoggedIn ? (
             <div className="flex items-center gap-3">
               <Link
-                href="/dashboard"
+                href={dashboardPath}
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 hidden sm:block"
               >
-                Go to Dashboard
+                {user?.user_role === UserRole.CUSTOMER ? "My Bookings" : "Go to Dashboard"}
               </Link>
               <form action={logout}>
                 <button

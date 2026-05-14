@@ -16,8 +16,10 @@ export async function demoLogin() {
     maxAge: 60 * 60 * 24 * 7, // 1 week
   });
 
+  const role = UserRole.CUSTOMER;
+
   // Set the user role to 'customer' using enum
-  cookieStore.set("user_role", UserRole.CUSTOMER, {
+  cookieStore.set("user_role", role, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -25,9 +27,13 @@ export async function demoLogin() {
     maxAge: 60 * 60 * 24 * 7, // 1 week
   });
 
-  // Redirect to the dashboard
-  redirect('/dashboard');
+  // Redirect based on role
+  if (role === UserRole.CUSTOMER) {
+    redirect('/my-bookings');
+  } else {
+    redirect('/dashboard');
   }
+}
 
   export async function logout() {
   const cookieStore = await cookies();

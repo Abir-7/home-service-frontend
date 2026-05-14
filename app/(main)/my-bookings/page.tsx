@@ -92,9 +92,7 @@ const FILTERS: { id: FilterStatus; label: string; icon: React.ReactNode }[] = [
   { id: "cancelled", label: "Cancelled", icon: <XCircle className="w-4 h-4" /> },
 ];
 
-// ─── Component ────────────────────────────────────────────────────────────────
-
-export default function CustomerOverview() {
+export default function MyBookingsPage() {
   const [activeFilter, setActiveFilter] = useState<FilterStatus>("all");
 
   const filteredBookings = BOOKINGS.filter((booking) => {
@@ -103,10 +101,14 @@ export default function CustomerOverview() {
   });
 
   return (
-    <div className="space-y-8">
+    <div className="max-w-7xl mx-auto p-4 md:p-8 space-y-8 min-h-screen">
+      <div>
+        <h1 className="text-3xl font-bold text-gray-900">My Bookings</h1>
+        <p className="text-muted-foreground mt-1">Manage and track your home service appointments</p>
+      </div>
+
       {/* ── Filter Tabs ── */}
       <div className="flex flex-col gap-4">
-        <h2 className="text-lg font-semibold text-gray-900">Filter Bookings</h2>
         <div className="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
           <div className="flex bg-gray-100/80 p-1 rounded-xl w-fit">
             {FILTERS.map((filter) => (
@@ -137,7 +139,7 @@ export default function CustomerOverview() {
       </div>
 
       {/* ── Bookings Grid ── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch pb-10">
         {filteredBookings.length > 0 ? (
           filteredBookings.map((booking) => (
             <div key={booking.id} className="h-full">
@@ -149,10 +151,12 @@ export default function CustomerOverview() {
             </div>
           ))
         ) : (
-          <div className="col-span-full py-20 text-center bg-gray-50/50 rounded-3xl border border-dashed border-gray-200">
+          <div className="col-span-full py-24 text-center bg-gray-50/50 rounded-3xl border border-dashed border-gray-200">
              <Sparkles className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-             <p className="font-semibold text-gray-900">No {activeFilter === 'all' ? '' : activeFilter} bookings found</p>
-             <p className="text-sm text-gray-500 mt-1">Check back later or try another filter.</p>
+             <p className="font-semibold text-gray-900 text-lg">No {activeFilter === 'all' ? '' : activeFilter} bookings found</p>
+             <p className="text-sm text-gray-500 mt-1 max-w-xs mx-auto">
+               You don't have any {activeFilter === 'all' ? '' : activeFilter} appointments at the moment.
+             </p>
           </div>
         )}
       </div>

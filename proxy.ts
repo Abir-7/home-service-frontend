@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // 1. Define protected and public routes
-const protectedRoutes = ['/(dashboard)']; // The (dashboard) group handles many routes
+const protectedRoutes = ['/(dashboard)', '/my-bookings']; 
 const authRoutes = ['/signin', '/signup', '/forgot-password', '/reset-password', '/otp-verification'];
 const publicRoutes = ['/'];
 
@@ -13,7 +13,10 @@ export function proxy(req: NextRequest) {
   const token = req.cookies.get('auth_token')?.value;
 
   // 3. Check if the current route is protected or an auth route
-  const isProtectedRoute = path.startsWith('/dashboard') || protectedRoutes.some(route => path.startsWith(route));
+  const isProtectedRoute = 
+    path.startsWith('/dashboard') || 
+    path.startsWith('/my-bookings') ||
+    protectedRoutes.some(route => path.startsWith(route));
   const isAuthRoute = authRoutes.includes(path);
 
   // 4. Redirect Logic
