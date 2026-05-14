@@ -24,17 +24,16 @@ export default async function RootLayout({
   const token = cookieStore.get("auth_token")?.value;
 
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-    >
-      <body 
-        className={cn("min-h-full flex flex-col antialiased font-sans", inter.variable)}
-        suppressHydrationWarning
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          inter.variable
+        )}
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >

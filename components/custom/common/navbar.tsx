@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { useTheme } from "next-themes";
+import { useTheme } from "@teispace/next-themes";
 import React, { useEffect, useState } from "react";
 import { Moon, Sun, LogOut } from "lucide-react";
 import { logout } from "@/lib/actions/auth";
@@ -16,6 +16,12 @@ const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   }, []);
 
   if (!mounted) return null;
+
+  const toggleTheme = () => {
+    const newTheme = resolvedTheme === "dark" ? "light" : "dark";
+    console.log("Toggling theme from", resolvedTheme, "to", newTheme);
+    setTheme(newTheme);
+  };
 
   const isDark = resolvedTheme === "dark";
 
@@ -39,23 +45,28 @@ const Navbar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
           <li>
             <Link href="/contact">Contact</Link>
           </li>
+          {isLoggedIn && (
+            <li>
+              <Link href="/dashboard" className="text-blue-600 font-bold">
+                Dashboard
+              </Link>
+            </li>
+          )}
         </ul>
 
         {/* Right Side */}
         <div className="flex items-center gap-4">
           {/* Theme Toggle */}
           <button
-            onClick={() => setTheme(isDark ? "light" : "dark")}
-            className="border px-1 py-1 rounded-lg dark:border-gray-700 transition"
+            onClick={toggleTheme}
+            className="border px-2 py-2 rounded-lg border-gray-200 dark:border-gray-700 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
+            aria-label="Toggle theme"
           >
-            <Sun
-              className={`h-4 w-4 transition-all ${isDark ? "block" : "hidden"}`}
-            />
-            <Moon
-              className={` h-4 w-4 transition-all ${
-                isDark ? "hidden" : "block"
-              }`}
-            />
+            {isDark ? (
+              <Sun className="h-4 w-4 text-yellow-500" />
+            ) : (
+              <Moon className="h-4 w-4 text-gray-700" />
+            )}
           </button>
 
           {/* Login/Logout/Dashboard */}
