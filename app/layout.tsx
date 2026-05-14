@@ -22,6 +22,7 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies();
   const token = cookieStore.get("auth_token")?.value;
+  const role = cookieStore.get("user_role")?.value;
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -37,7 +38,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ReduxProvider token={token}>
+          <ReduxProvider token={token} role={role}>
             <TooltipProvider>
               {children}
             </TooltipProvider>

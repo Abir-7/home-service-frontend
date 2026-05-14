@@ -6,14 +6,16 @@ import { AuthProvider } from './auth-provider';
 
 export function ReduxProvider({ 
   children, 
-  token 
+  token,
+  role
 }: { 
   children: React.ReactNode;
   token?: string;
+  role?: string;
 }) {
   return (
     <Provider store={store}>
-      <AuthProvider token={token}>
+      <AuthProvider token={token} role={role}>
         {children}
       </AuthProvider>
     </Provider>

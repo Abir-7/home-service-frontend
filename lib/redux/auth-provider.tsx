@@ -8,9 +8,10 @@ import { useGetMeQuery } from './api/apiSlice';
 interface AuthProviderProps {
   children: ReactNode;
   token?: string;
+  role?: string;
 }
 
-export function AuthProvider({ children, token }: AuthProviderProps) {
+export function AuthProvider({ children, token, role }: AuthProviderProps) {
   const dispatch = useDispatch();
   
   // Use RTK Query to fetch user data if a token exists
@@ -24,10 +25,11 @@ export function AuthProvider({ children, token }: AuthProviderProps) {
       
       // If we have a token, set it immediately so RTK Query can use it in headers
       if (!userData) {
-          dispatch(login({ user: { user_id: '', user_role: UserRole.CUSTOMER }, token }));
+          const userRole = (role as UserRole) || UserRole.CUSTOMER;
+          dispatch(login({ user: { user_id: 'demo-user', user_role: userRole }, token }));
       }
     }
-  }, [token, dispatch, userData]);
+  }, [token, dispatch, userData, role]);
 
   useEffect(() => {
     if (isSuccess && userData && token) {
