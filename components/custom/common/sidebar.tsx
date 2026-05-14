@@ -68,7 +68,7 @@ export function AppSidebar() {
               {user?.user_role === UserRole.CLEANER && (
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild>
-                    <Link href="/dashboard/cleaner/task">
+                    <Link href="/dashboard/cleaner/cleaner-tasks">
                       <ClipboardList className="w-4 h-4" />
                       <span>My Tasks</span>
                     </Link>
