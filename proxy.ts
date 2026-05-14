@@ -11,6 +11,7 @@ export function proxy(req: NextRequest) {
   
   // Note: Adjust the cookie name 'auth_token' to match what your auth system uses
   const token = req.cookies.get('auth_token')?.value;
+  const role = req.cookies.get('user_role')?.value;
 
   // 3. Check if the current route is protected or an auth route
   const isProtectedRoute = 
@@ -31,7 +32,15 @@ export function proxy(req: NextRequest) {
 
   // If accessing an auth route (like /signin) while already logged in, redirect to dashboard
   if (isAuthRoute && token) {
+    if (role === 'customer') {
+      return NextResponse.redirect(new URL('/my-bookings', req.nextUrl.origin));
+    }
     return NextResponse.redirect(new URL('/dashboard', req.nextUrl.origin));
+  }
+
+  // Ensure customer is redirected to /my-bookings if they land on /dashboard
+  if (path === '/dashboard' && role === 'customer') {
+      return NextResponse.redirect(new URL('/my-bookings', req.nextUrl.origin));
   }
 
   return NextResponse.next();

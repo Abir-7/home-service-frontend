@@ -1,26 +1,19 @@
-import React from 'react';
+import { CustomerGrowthChart } from "@/components/custom/admin/customer_groth_chart";
+import { ProvidedWorkingGrowthChart } from "@/components/custom/admin/provider_working_chart";
+import { AdminStatsCards } from "@/components/custom/admin/state_card";
+import { YearlyRevenueChart } from "@/components/custom/admin/yearly_revenue_chart";
+import React from "react";
 
 export default function AdminOverview() {
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold">Admin Overview</h2>
-      <div className="grid gap-4 md:grid-cols-4">
-        <div className="p-6 border rounded-xl bg-card shadow-sm">
-          <h3 className="font-semibold mb-2">Total Users</h3>
-          <p className="text-3xl font-bold">1,240</p>
-        </div>
-        <div className="p-6 border rounded-xl bg-card shadow-sm">
-          <h3 className="font-semibold mb-2">System Health</h3>
-          <p className="text-3xl font-bold text-green-600">99.9%</p>
-        </div>
-        <div className="p-6 border rounded-xl bg-card shadow-sm">
-          <h3 className="font-semibold mb-2">New Reports</h3>
-          <p className="text-3xl font-bold">5</p>
-        </div>
-        <div className="p-6 border rounded-xl bg-card shadow-sm">
-          <h3 className="font-semibold mb-2">Pending Approvals</h3>
-          <p className="text-3xl font-bold">12</p>
-        </div>
+      <AdminStatsCards></AdminStatsCards>
+      <div className="flex gap-4 w-full ">
+        <CustomerGrowthChart></CustomerGrowthChart>
+        <ProvidedWorkingGrowthChart></ProvidedWorkingGrowthChart>
+      </div>
+      <div>
+        <YearlyRevenueChart></YearlyRevenueChart>
       </div>
     </div>
   );

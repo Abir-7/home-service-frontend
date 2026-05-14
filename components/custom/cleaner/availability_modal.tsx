@@ -10,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -94,9 +95,12 @@ export function AddAvailabilityModal({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-sm rounded-2xl p-7 gap-0">
         <DialogHeader className="mb-5">
-          <DialogTitle className="text-xl font-bold text-gray-900">
+          <VisuallyHidden>
+            <DialogTitle>Add Availability</DialogTitle>
+          </VisuallyHidden>
+          <div className="text-xl font-bold text-gray-900">
             Add Availability
-          </DialogTitle>
+          </div>
         </DialogHeader>
 
         <div className="flex flex-col gap-5">

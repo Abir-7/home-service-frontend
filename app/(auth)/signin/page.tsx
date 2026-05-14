@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,9 +18,18 @@ export default function SignInPage() {
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const handleSubmit = () => {
     console.log("Sign in:", { phone, password, remember });
+  };
+
+  const handleDemoLogin = (role: UserRole) => {
+    startTransition(async () => {
+      await demoLogin(role);
+      router.refresh();
+    });
   };
 
   return (
@@ -114,15 +124,16 @@ export default function SignInPage() {
 
           <div className="grid grid-cols-2 gap-2">
             {(Object.values(UserRole) as UserRole[]).map((role) => (
-              <form key={role} action={demoLogin.bind(null, role)}>
-                <Button
-                  type="submit"
-                  variant="outline"
-                  className="w-full h-10 border-violet-200 text-violet-600 hover:bg-violet-50 font-semibold capitalize transition-all active:scale-[0.98]"
-                >
-                  Demo ({role})
-                </Button>
-              </form>
+              <Button
+                key={role}
+                type="button"
+                variant="outline"
+                onClick={() => handleDemoLogin(role)}
+                disabled={isPending}
+                className="w-full h-10 border-violet-200 text-violet-600 hover:bg-violet-50 font-semibold capitalize transition-all active:scale-[0.98]"
+              >
+                {isPending ? "Loading..." : `Demo (${role})`}
+              </Button>
             ))}
           </div>
         </div>
