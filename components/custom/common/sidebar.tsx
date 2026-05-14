@@ -158,7 +158,7 @@ export function AppSidebar() {
                           <SidebarMenuSubButton
                             asChild
                             isActive={isActive(
-                              "/dashboard/admin/services/main"
+                              "/dashboard/admin/services/main",
                             )}
                           >
                             <Link href="/dashboard/admin/services/main">
@@ -170,7 +170,7 @@ export function AppSidebar() {
                           <SidebarMenuSubButton
                             asChild
                             isActive={isActive(
-                              "/dashboard/admin/services/extra"
+                              "/dashboard/admin/services/extra",
                             )}
                           >
                             <Link href="/dashboard/admin/services/extra">
