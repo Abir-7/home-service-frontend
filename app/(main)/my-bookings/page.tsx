@@ -15,7 +15,7 @@ import {
 import BookingCard, {
   Booking,
   BookingStatus,
-} from "@/components/custom/booking/booking_card";
+} from "@/components/custom/booking/booking_card_customer";
 import { cn } from "@/lib/utils";
 
 // ─── Demo Data ────────────────────────────────────────────────────────────────

@@ -1,6 +1,6 @@
 "use client";
 
-import { House, CalendarDays } from "lucide-react";
+import { House, CalendarDays, ClipboardList } from "lucide-react";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/redux/store";
@@ -59,6 +59,18 @@ export function AppSidebar() {
                     <Link href="/dashboard">
                       <House className="w-4 h-4" />
                       <span>Dashboard</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              )}
+
+              {/* Cleaner Tasks */}
+              {user?.user_role === UserRole.CLEANER && (
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <Link href="/dashboard/cleaner/task">
+                      <ClipboardList className="w-4 h-4" />
+                      <span>My Tasks</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
